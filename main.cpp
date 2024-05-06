@@ -19,7 +19,7 @@ int main()
     triangle[1].color = sf::Color::Green;
     triangle[2].color = sf::Color::Blue;
 
-    if (!texture.loadFromFile("images/NewtonDetail.png"))
+    if (!texture.loadFromFile("../../../../images/NewtonDetail.png"))
     {
         std::cerr << "could not load file";
     }
