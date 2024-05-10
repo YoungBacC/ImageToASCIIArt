@@ -11,8 +11,9 @@ std::string listUsableImages();
 std::string promptForImageName(const std::vector<std::string>& vec);
 sf::Image readInImage(std::string fileName);
 void convertImageToGrayScale(sf::Image);
-int matchBrightnessToASCII(sf::Uint8 brightness);
+int matchBrightnessToASCII(int brightness);
 void resizeImage(sf::Image& image);
+double getBrightnessValue(const sf::Color& color);
 
 //summary: lists the usable image filenames
 std::string listUsableImages()
@@ -83,43 +84,22 @@ sf::Image readInImage(std::string fileName)
 	return imageChosen;
 }
 
-void getBrightnessValue(sf::Image image)
+double getBrightnessValue(const sf::Color& color)
 {
-	char asciiArr[30] = { 'Ñ','@','#','W','$','9','8','7','6','5','4','3','2','2','1','0','?','!','a','b','c',';',':','+','=','-',',','.','_',' ' };
-
-	//get a pointer to the array of pixels
-	const sf::Uint8* pixels = image.getPixelsPtr();
-	sf::Vector2u imageSize = image.getSize();
-
-	sf::Uint8 red;
-	sf::Uint8 green;
-	sf::Uint8 blue;
-	sf::Uint8 alpha;
-
-	for (int j = 0; j < imageSize.y; j++)
-	{
-		for (int j = 0; j < imageSize.y; j++)
-		{
-			red = pixels[4 * j];
-			green = pixels[4 * j + 1];
-			blue = pixels[4 * j + 2];
-			alpha = pixels[4 * j + 3];
-
-			//calculate brightness
-			sf::Uint8 brightness = (red + green + blue)/3;
-
-			std::cout << asciiArr[unsigned(matchBrightnessToASCII(brightness))];
-		}
-
-		std::cout << std::endl;
-	}
+	//get average of RGB to get brightness
+	double brightness = (double(color.r) + double(color.b) + double(color.g)) / 3.0;
+	return brightness;
 }
 
-int matchBrightnessToASCII(sf::Uint8 brightness)
+int matchBrightnessToASCII(int brightness)
 {
-	int value = (brightness / 255) * 30;
+	//calculate brightness with linear interpolation
+	double value = (brightness / 255.0) * 20.0;
 
-	return value;
+	//convert to interger value
+	int newValue = std::floor(value);
+
+	return newValue;
 }
 
 void resizeImage(sf::Image& image)
@@ -130,12 +110,12 @@ void resizeImage(sf::Image& image)
 	sprite.setTexture(texture);
 
 	// Calculate scaling factors
-	float scaleX = static_cast<float>(100) / image.getSize().x;
-	float scaleY = static_cast<float>(100) / image.getSize().y;
+	float scaleX = static_cast<float>(150) / image.getSize().x;
+	float scaleY = static_cast<float>(75) / image.getSize().y;
 
 	// Create a render texture
 	sf::RenderTexture render;
-	render.create(100, 100);
+	render.create(150, 75);
 
 	// Clear render texture
 	render.clear(sf::Color::Transparent);
