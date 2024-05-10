@@ -11,6 +11,8 @@ std::string listUsableImages();
 std::string promptForImageName(const std::vector<std::string>& vec);
 sf::Image readInImage(std::string fileName);
 void convertImageToGrayScale(sf::Image);
+int matchBrightnessToASCII(sf::Uint8 brightness);
+void resizeImage(sf::Image& image);
 
 //summary: lists the usable image filenames
 std::string listUsableImages()
@@ -104,8 +106,50 @@ void getBrightnessValue(sf::Image image)
 			alpha = pixels[4 * j + 3];
 
 			//calculate brightness
-			sf::Uint8 brightness = .2126 * red + .7152 * green + .0722 * blue;
+			sf::Uint8 brightness = (red + green + blue)/3;
+
+			std::cout << asciiArr[unsigned(matchBrightnessToASCII(brightness))];
 		}
+
+		std::cout << std::endl;
 	}
+}
+
+int matchBrightnessToASCII(sf::Uint8 brightness)
+{
+	int value = (brightness / 255) * 30;
+
+	return value;
+}
+
+void resizeImage(sf::Image& image)
+{
+	sf::Sprite sprite;
+	sf::Texture texture;
+	texture.loadFromImage(image);
+	sprite.setTexture(texture);
+
+	// Calculate scaling factors
+	float scaleX = static_cast<float>(100) / image.getSize().x;
+	float scaleY = static_cast<float>(100) / image.getSize().y;
+
+	// Create a render texture
+	sf::RenderTexture render;
+	render.create(100, 100);
+
+	// Clear render texture
+	render.clear(sf::Color::Transparent);
+
+	// Set the scale of the sprite to perform the resizing
+	sprite.setScale(sf::Vector2f(scaleX, scaleY));
+
+	// Draw the resized sprite onto the render texture
+	render.draw(sprite);
+
+	// End drawing to the render texture
+	render.display();
+
+	// Retrieve the resized image from the render texture
+	image = render.getTexture().copyToImage();;
 }
 
