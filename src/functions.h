@@ -110,12 +110,12 @@ void resizeImage(sf::Image& image)
 	sprite.setTexture(texture);
 
 	// Calculate scaling factors
-	float scaleX = static_cast<float>(150) / image.getSize().x;
-	float scaleY = static_cast<float>(75) / image.getSize().y;
+	float scaleX = static_cast<float>(200) / image.getSize().x;
+	float scaleY = static_cast<float>(100) / image.getSize().y;
 
 	// Create a render texture
 	sf::RenderTexture render;
-	render.create(150, 75);
+	render.create(200, 100);
 
 	// Clear render texture
 	render.clear(sf::Color::Transparent);

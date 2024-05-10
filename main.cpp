@@ -5,7 +5,7 @@
 int main()
 {
     bool isWhiteDominant = false;
-    char characterChosen;
+    std::string characterChosen;
 
     sf::Image image = readInImage(listUsableImages());
 
@@ -15,15 +15,15 @@ int main()
         std::cout << "Is the picture chosen white or black dominant? (W / B): " << std::endl;
         std::cin >> characterChosen;
 
-        if (characterChosen == 'W')
+        if (characterChosen == "W")
         {
-            isWhiteDominant == true;
+            isWhiteDominant = true;
         }
         else
         {
             isWhiteDominant = false;
         }
-    } while (characterChosen != 'W' && characterChosen != 'B');
+    } while (characterChosen != "W" && characterChosen != "B");
 
     resizeImage(image);
 
@@ -31,6 +31,7 @@ int main()
 
     //chars to match brightness to
     std::string shorter = " .'`^,:;Il!i><~+_-?][}{1)(|/";
+    std::string shorterRev = "/|()1{}[]?-_+~<>i!lI;:,^`'. ";
     std::string asciiChars = " .'`^,:;Il!i><~+_-?][}{1)(|/tfjrxnuvczXYUJCLQ0OZmwqpdbkhao*#MW&8%B@$";
     std::string asciiReversed = "$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/|()1{}[]?-_+~<>i!lI;:,^ `'. ";
     //get a pointer to the array of pixels
@@ -54,11 +55,11 @@ int main()
             //output the corresponding ascii value
             if (isWhiteDominant)
             {
-                std::cout << asciiReversed[asciiIndex];
+                std::cout << shorter[asciiIndex];
             }
             else
             {
-                std::cout << shorter[asciiIndex];
+                std::cout << shorterRev[asciiIndex];
             }
 
         }
