@@ -30,10 +30,10 @@ int main()
     char asciiArr[30] = { 'N','@','#','W','$','9','8','7','6','5','4','3','2','2','1','0','?','!','a','b','c',';',':','+','=','-',',','.','_',' ' };
 
     //chars to match brightness to
-    std::string shorter = " .'`^,:;Il!i><~+_-?][}{1)(|/";
-    std::string shorterRev = "/|()1{}[]?-_+~<>i!lI;:,^`'. ";
-    std::string asciiChars = " .'`^,:;Il!i><~+_-?][}{1)(|/tfjrxnuvczXYUJCLQ0OZmwqpdbkhao*#MW&8%B@$";
-    std::string asciiReversed = "$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/|()1{}[]?-_+~<>i!lI;:,^ `'. ";
+    std::string shorter = ".'`^,:;Il!i><~+_-?][}{1)(|/";
+    std::string shorterRev = "/|()1{}[]?-_+~<>i!lI;:,^`'.";
+    std::string asciiChars = ".'`^,:;Il!i><~+_-?][}{1)(|/tfjrxnuvczXYUJCLQ0OZmwqpdbkhao*#MW&8%B@$";
+    std::string asciiReversed = "$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/|()1{}[]?-_+~<>i!lI;:,^`'.";
     //get a pointer to the array of pixels
 
     //get size of image
@@ -55,11 +55,11 @@ int main()
             //output the corresponding ascii value
             if (isWhiteDominant)
             {
-                std::cout << shorter[asciiIndex];
+                std::cout << asciiChars[asciiIndex];
             }
             else
             {
-                std::cout << shorterRev[asciiIndex];
+                std::cout << asciiReversed[asciiIndex];
             }
 
         }
