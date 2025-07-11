@@ -4,7 +4,7 @@
 #include<filesystem>
 #include<vector>
 #include<SFML/System.hpp>
-#include<exception>
+#include<SFML/Graphics.hpp>
 
 //function declarations
 std::string listUsableImages();
@@ -22,7 +22,7 @@ std::string listUsableImages()
 	std::vector<std::string> images;
 
 	//relative path to image directory
-	std::string pathDir = "../../../../images";
+	std::string pathDir = "../images";
 
 	std::cout << "Available images" << std::endl;
 	std::cout << "---------------------------" << "\n";
@@ -68,7 +68,7 @@ sf::Image readInImage(std::string fileName)
 	
 	//read in stream from file
 	sf::FileInputStream stream;
-	stream.open("../../../../images/" + fileName);
+	stream.open("../images/" + fileName);
 
 	//check if file was opened properly and load image from stream
 	if (!imageChosen.loadFromStream(stream))
@@ -104,18 +104,17 @@ int matchBrightnessToASCII(int brightness)
 
 void resizeImage(sf::Image& image)
 {
-	sf::Sprite sprite;
-	sf::Texture texture;
-	texture.loadFromImage(image);
-	sprite.setTexture(texture);
+	int sizeX = 500;
+	int sizeY = 250;
+	sf::Texture texture(image);
+	sf::Sprite sprite(texture);
 
 	// Calculate scaling factors
-	float scaleX = static_cast<float>(500) / image.getSize().x;
-	float scaleY = static_cast<float>(250) / image.getSize().y;
+	float scaleX = static_cast<float>(sizeX) / image.getSize().x;
+	float scaleY = static_cast<float>(sizeY) / image.getSize().y;
 
 	// Create a render texture
-	sf::RenderTexture render;
-	render.create(500, 250);
+	sf::RenderTexture render(sf::Vector2u(sizeX, sizeY));
 
 	// Clear render texture
 	render.clear(sf::Color::Transparent);

@@ -1,6 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
-#include "src/functions.h"
+#include "functions.h"
 
 int main()
 {
@@ -47,7 +47,7 @@ int main()
         {
 
             //get color at x and y
-            sf::Color color = image.getPixel(x, y);
+            sf::Color color = image.getPixel(sf::Vector2u(x, y));
 
             //get brightness of that color and match it to ascii value
             int asciiIndex  = matchBrightnessToASCII(getBrightnessValue(color));
